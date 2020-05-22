@@ -12,6 +12,8 @@ TagManager:
   - Coin
   - FxTemporaire
   - CameraController
+  - Fire
+  - instant-die
   layers:
   - Default
   - TransparentFX

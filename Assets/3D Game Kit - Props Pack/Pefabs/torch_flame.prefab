@@ -147,6 +147,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Torch_2_hold
       objectReference: {fileID: 0}
+    - target: {fileID: 1770518318561337840, guid: 9e4da4bc275bf4fbea8458d3af702e60,
+        type: 3}
+      propertyPath: m_TagString
+      value: instant-die
+      objectReference: {fileID: 0}
     - target: {fileID: 7369286541705454619, guid: 9e4da4bc275bf4fbea8458d3af702e60,
         type: 3}
       propertyPath: m_LocalPosition.x

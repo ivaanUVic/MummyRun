@@ -46,7 +46,7 @@ public class GameControllerScript : MonoBehaviour
     private float hitMinOffset = 0.32f;
     private float hitMaxOffset = 0.65f;
     private float hitZOffset = 31;
-   
+    private float height = 3.5f;
 
 
     private IEnumerator changeLine; //El necessitem per cancelar lanimacio al chocar
@@ -146,9 +146,14 @@ public class GameControllerScript : MonoBehaviour
         characterColliderTrigger.OnEnter = (ColliderTrigger.OnEnterDelegate)Delegate.Combine(this.characterColliderTrigger.OnEnter, new ColliderTrigger.OnEnterDelegate(this.OnCharacterColliderEnterTrigger));
         ovr = GameObject.FindWithTag("CameraController").GetComponent<OVRManager>();
 
+       
         Reset();
     }
-
+    void Start()
+    {
+        height = ovr.headPoseRelativeOffsetTranslation.y;
+        print(height);
+    }
     void FixedUpdate()
     {
         if (!isGameOver)
@@ -490,6 +495,12 @@ public class GameControllerScript : MonoBehaviour
             characterCollider.height = 1.4f;
             characterCollider.center = new Vector3(0, 0.74f, 0.04f);
 
+            
+
+
+            ovr.headPoseRelativeOffsetTranslation = new Vector3(0f, 0.74f, 0f);
+
+
 
             if (!getTransitionFromHeight())
             {
@@ -594,6 +605,7 @@ public class GameControllerScript : MonoBehaviour
         characterCollider.height = 3.5f;
         characterCollider.center = new Vector3(0, 1.75f, 0.04f);
 
+        ovr.headPoseRelativeOffsetTranslation = new Vector3(0f, height, 0f);
 
         if (this.characterController.enabled)
         {
@@ -628,7 +640,7 @@ public class GameControllerScript : MonoBehaviour
         float endX;
         float dir;
 
-        float startRotation;
+
 
         bool doStumple = false;
 
@@ -659,6 +671,9 @@ public class GameControllerScript : MonoBehaviour
             endX = GetTrackX(newTrackIndex);
 
             dir = Mathf.Sign((float)newTrackIndex - trackIndexTarget);
+
+
+
             //startRotation = this.characterRotation;
             /*
             if (move == -1 && IsGrounded == true)
@@ -785,9 +800,12 @@ public class GameControllerScript : MonoBehaviour
                 }
 
                 break;
+            case "instant-die":
+                this.DoStumble(collidedObject, StumbleLocation.FrontMiddle);
+                break;
             case "obstacle":
 
-//                Debug.Log(trackMovementLast);
+                //Debug.Log(trackMovementLast);
                 //Debug.Log(collider.name);
 
                 int lane;

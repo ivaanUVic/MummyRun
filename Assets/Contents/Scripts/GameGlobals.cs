@@ -106,7 +106,7 @@ public class GameGlobals : MonoBehaviour
     public void Restart()
     {
         StopAllCoroutines();
-        print("restart");
+        //print("restart");
         ChangeScene(true, "MainScene",1f);
     }
 

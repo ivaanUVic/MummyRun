@@ -218,11 +218,11 @@ public class CameraController : MonoBehaviour
     {
         if (isRolling)
         {
-            playerController.camera.transform.position = new Vector3(playerController.camera.transform.position.x, playerController.camera.transform.position.y - deftHeight, playerController.camera.transform.position.z);
+            //playerController.camera.transform.position = new Vector3(playerController.camera.transform.position.x, playerController.camera.transform.position.y - deftHeight, playerController.camera.transform.position.z);
         }
         else
         {
-            playerController.camera.transform.position = new Vector3(playerController.camera.transform.position.x, playerController.camera.transform.position.y + deftHeight, playerController.camera.transform.position.z);
+            //playerController.camera.transform.position = new Vector3(playerController.camera.transform.position.x, playerController.camera.transform.position.y + deftHeight, playerController.camera.transform.position.z);
         }
        
 
