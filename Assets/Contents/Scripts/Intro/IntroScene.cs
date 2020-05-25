@@ -38,6 +38,16 @@ public class IntroScene : MonoBehaviour
     { 
         Application.Quit();
     }
+
+    public void ConfigGame()
+    {
+        ChangeScene(true, "ConfigScene", 1.5f);
+    }
+
+    public void IntroGame()
+    {
+        ChangeScene(true,"IntroScene",1.5f);
+    }
     private void ChangeScene(bool fadeIn, String scene, float duration = 3f)
     {
         if (fadeIn)
