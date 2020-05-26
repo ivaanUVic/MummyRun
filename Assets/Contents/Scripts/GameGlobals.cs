@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
+using System.Runtime.InteropServices;
 
 public class GameGlobals : MonoBehaviour
 {
@@ -148,7 +149,6 @@ public class GameGlobals : MonoBehaviour
         {
             points += val;
             Coins.text = points.ToString();
-
         }else
         {
             plus += val;

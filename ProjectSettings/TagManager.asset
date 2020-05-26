@@ -14,6 +14,8 @@ TagManager:
   - CameraController
   - Fire
   - instant-die
+  - Banana
+  - Pinya
   layers:
   - Default
   - TransparentFX

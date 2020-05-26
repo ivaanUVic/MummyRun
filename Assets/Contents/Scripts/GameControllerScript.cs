@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -47,6 +49,12 @@ public class GameControllerScript : MonoBehaviour
     private float hitMaxOffset = 0.65f;
     private float hitZOffset = 31;
     private float height = 3.5f;
+
+    private float timeBanana = 0f;
+    private float timePinya = 0f;
+    public float powerupDuration = 10f;
+    private bool pinyaBool = false;
+    private bool bananaBool = false;
 
 
     private IEnumerator changeLine; //El necessitem per cancelar lanimacio al chocar
@@ -127,7 +135,7 @@ public class GameControllerScript : MonoBehaviour
     private int trackIndexTarget;
     private int trackMovement;
     private int trackMovementNext;
-    private int trackMovementLast =0;
+    private int trackMovementLast = 0;
     private OVRManager ovr = null;
 
 
@@ -146,7 +154,7 @@ public class GameControllerScript : MonoBehaviour
         characterColliderTrigger.OnEnter = (ColliderTrigger.OnEnterDelegate)Delegate.Combine(this.characterColliderTrigger.OnEnter, new ColliderTrigger.OnEnterDelegate(this.OnCharacterColliderEnterTrigger));
         ovr = GameObject.FindWithTag("CameraController").GetComponent<OVRManager>();
 
-       
+
         Reset();
     }
     void Start()
@@ -196,38 +204,92 @@ public class GameControllerScript : MonoBehaviour
         isRolling = false;
         isJumping = false;
         isGameOver = false;
+        bananaBool = false;
+        timeBanana = Time.deltaTime;
+        timePinya = Time.deltaTime;
 
     }
 
     private void UpdateAcceleration()
     {
+      
         if (playerZ > playerZCheck)
         {
-            if (timeEplased > 0)
+
+            if(bananaBool)
             {
-                startTime += timeEplased;
-                timeEplased = 0;
+
+                if (timeBanana >= 0)
+                {
+                    timeBanana -= Time.deltaTime;
+                    currentLevelSpeed = this.resetAccelerate(false);
+                }
+                else {
+                    bananaBool = false;
+                }
+               
+            }else if (pinyaBool)
+            {
+                if (timePinya >= 0)
+                {
+                    timePinya -= Time.deltaTime;
+                    currentLevelSpeed = this.resetAccelerate(true);
+                }
+                else
+                {
+                    pinyaBool = false;
+                }
             }
-            currentLevelSpeed = this.Accelerate(Time.time - startTime);
-            playerIsRunning = true;
+            else
+            {
+                if (timeEplased > 0)
+                {
+                    startTime += timeEplased;
+                    timeEplased = 0;
+                }
+                currentLevelSpeed = this.Accelerate(Time.time - startTime);
+                playerIsRunning = true;
+                
+            }
+
+           
         }
-        else
+
+    /*    else
         {
+
             timeEplased += Time.deltaTime;
             playerIsRunning = false;
         }
 
+        */
+            playerZCheck = playerZ;
+        
 
-        playerZCheck = playerZ;
+        //timeBanana += Time.deltaTime;                            
+    
     }
-
     public float Accelerate(float t)
     {
 
         if (t >= this.speed.accelerationTime) { return this.speed.end; }
         return t * (this.speed.end - this.speed.start) / this.speed.accelerationTime + this.speed.start;
     }
-   
+
+    public float resetAccelerate(Boolean plus)
+    {
+        if (!plus)
+        {
+            return this.speed.start;
+        }
+        else
+        {
+           // currentLevelSpeed = this.Accelerate(Time.time - startTime);
+            return this.Accelerate(Time.time - startTime) + 10;
+        }
+        return 0f;
+        
+    }
     private void UpdateFunction()
     {
 
@@ -253,13 +315,13 @@ public class GameControllerScript : MonoBehaviour
     // eix X
     private Vector3 ApplyXMovement(Vector3 position)
     {
-        
+
         Vector3 currentPos = player.transform.position;
         Vector3 nextPos = Vector3.right * playerX;
         return new Vector3((nextPos - currentPos).x, position.y, position.z);
     }
 
-   
+
     // eix Y
     private Vector3 ApplyYMovement(Vector3 position)
     {
@@ -285,7 +347,7 @@ public class GameControllerScript : MonoBehaviour
                 doAnEffect(EffetcType.LandingPuff);
             }
         }
-       
+
 
         verticalSpeed -= this.gravity * Time.deltaTime;
 
@@ -297,7 +359,7 @@ public class GameControllerScript : MonoBehaviour
         }
         if (isFalling && !isJumping)
         {
-            if(isRolling) EndRoll();
+            if (isRolling) EndRoll();
 
             playerAnimator.Play("dive", 0, 0);
         }
@@ -399,9 +461,9 @@ public class GameControllerScript : MonoBehaviour
         }
 
         TouchController.SwipeDirection direction = GameGlobals.touchController.getSwipeDirection();
-        if(direction != TouchController.SwipeDirection.Null)
+        if (direction != TouchController.SwipeDirection.Null)
         {
-            if(direction == TouchController.SwipeDirection.Up)
+            if (direction == TouchController.SwipeDirection.Up)
             {
                 HandleSwipe("UP");
             }
@@ -467,7 +529,7 @@ public class GameControllerScript : MonoBehaviour
 
     }
 
-
+ 
 
 
     public void doPlayerRun()
@@ -777,6 +839,7 @@ public class GameControllerScript : MonoBehaviour
 
         //-------------------------------------------------------------------------------
 
+  
         switch (collider.tag)
         {
         
@@ -796,6 +859,21 @@ public class GameControllerScript : MonoBehaviour
                         }
 
 
+                    }
+                    if (collidedObject.tag == "Banana")
+                    {
+                        timeBanana = powerupDuration + Time.deltaTime;
+                        bananaBool = true;
+                        Coin currentCoin = collidedObject.gameObject.GetComponent<Coin>();
+                        if (currentCoin != null)
+                        {
+                            currentCoin.pickUp();
+                        }
+                    }
+                    if (collidedObject.tag == "Pinya")
+                    {
+                        timePinya = powerupDuration + Time.deltaTime;
+                        pinyaBool = true;
                     }
                 }
 

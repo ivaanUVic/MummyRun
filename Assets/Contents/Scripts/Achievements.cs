@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +39,7 @@ public class Achievements : MonoBehaviour
     [HideInInspector]
     public bool scoresLock;
 
+    public float countedScored;
     private void Start()
     {
         Reset();
@@ -138,7 +140,7 @@ public class Achievements : MonoBehaviour
     private IEnumerator countScore()
     {
 
-       
+        print("here");
         int pitchTrigger = 0;
 
         // Coins Counting
@@ -169,8 +171,8 @@ public class Achievements : MonoBehaviour
                     {
                         pitchTrigger++;
                     }
-                   
 
+                   
                     pointsCounter++;
                     yield return new WaitForSeconds(Time.fixedDeltaTime);
 
@@ -213,13 +215,15 @@ public class Achievements : MonoBehaviour
 
                     totalScore = storedTotalScore + (int)countedPoints;
                     currentScore = storedScore + (int)bonusCoins ;
-
-
+                    print(currentScore);
+                   // print(currentCoins);
+                    print(countedPoints);
                     lblScorePanelTotalScore.text = totalScore.ToString();
 
                     GameGlobals.Instance.PlaySound(PowerUp);
 
                     scoresCounter++;
+                    countedScored = countedPoints;
 
                     yield return new WaitForSeconds(Time.fixedDeltaTime);
                 }
