@@ -160,7 +160,10 @@ public class GameControllerScript : MonoBehaviour
     void Start()
     {
         height = ovr.headPoseRelativeOffsetTranslation.y;
-        EndRoll();
+        if (ovr != null)
+        {
+            ovr.headPoseRelativeOffsetTranslation = new Vector3(0f, height, 0f);
+        }
     }
     void FixedUpdate()
     {
@@ -662,7 +665,7 @@ public class GameControllerScript : MonoBehaviour
 
         characterCollider.height = 3.5f;
         characterCollider.center = new Vector3(0, 1.75f, 0.04f);
-        if(ovr != null)
+        if (ovr != null)
         {
             ovr.headPoseRelativeOffsetTranslation = new Vector3(0f, height, 0f);
         }
