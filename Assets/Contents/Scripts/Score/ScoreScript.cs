@@ -10,7 +10,7 @@ public class ScoreScript : MonoBehaviour
     void Start()
     {
         var arrInt = new int[3];
-        var totalScore = PlayerPrefs.GetInt("totalCoins", 0) * PlayerPrefs.GetInt("totalScore", 0);
+        var totalScore = PlayerPrefs.GetInt("totalCoins") + (PlayerPrefs.GetInt("totalScore")*20);
 
         //Inicialitzem per primer cop el array
         if (arrInt[0] < 1)
@@ -39,17 +39,18 @@ public class ScoreScript : MonoBehaviour
          */
         if (totalScore > PlayerPrefs.GetInt("bestScore1"))
         {
+            arrInt[2] = PlayerPrefs.GetInt("bestScore2");
+            arrInt[1] = PlayerPrefs.GetInt("bestScore1");
             PlayerPrefs.SetInt("bestScore1", totalScore);
-            arrInt[2] = arrInt[1];
-            arrInt[1] = arrInt[0];
             arrInt[0] = totalScore;
             PlayerPrefs.SetInt("bestScore2", arrInt[1]);
             PlayerPrefs.SetInt("bestScore3", arrInt[2]);
         }
         if (totalScore < PlayerPrefs.GetInt("bestScore1") && totalScore > PlayerPrefs.GetInt("bestScore2"))
         {
+            
+            arrInt[2] = PlayerPrefs.GetInt("bestScore2");
             PlayerPrefs.SetInt("bestScore2", totalScore);
-            arrInt[2] = arrInt[1];
             arrInt[1] = PlayerPrefs.GetInt("bestScore2");
             PlayerPrefs.SetInt("bestScore3", arrInt[2]);
 
