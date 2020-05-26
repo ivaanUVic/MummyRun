@@ -107,8 +107,8 @@ public class Achievements : MonoBehaviour
     {
         lblScorePanelCollectedCoins.text = GameGlobals.Instance.points.ToString();
         lblScorePanelCollectedScore.text = GameGlobals.Instance.plus.ToString();
-        ScoreFinal.SetActive(true);
-        ScorePanel.SetActive(false);
+        //ScoreFinal.SetActive(true);
+        //ScorePanel.SetActive(false);
 
         startCountDownScore();
        
@@ -126,7 +126,7 @@ public class Achievements : MonoBehaviour
         scoresCounter = 0;
         scoreWaitCounter = 0;
 
-        SceneManager.LoadScene("ScoreScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("ScoreScene");
         //scoring = StartCoroutine(countScore());
     }
 

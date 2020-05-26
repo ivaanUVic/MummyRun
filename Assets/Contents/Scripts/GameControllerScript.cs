@@ -160,7 +160,7 @@ public class GameControllerScript : MonoBehaviour
     void Start()
     {
         height = ovr.headPoseRelativeOffsetTranslation.y;
-        print(height);
+        EndRoll();
     }
     void FixedUpdate()
     {
@@ -847,7 +847,7 @@ public class GameControllerScript : MonoBehaviour
                 if (collidedObject != null)
                 {
                    
-                    if (collidedObject.tag == "Coin")
+                    if (collidedObject.tag == "Coin" || collidedObject.tag == "Banana" || collidedObject.tag == "Pinya")
                     {
 
 
@@ -863,11 +863,6 @@ public class GameControllerScript : MonoBehaviour
                     {
                         timeBanana = powerupDuration + Time.deltaTime;
                         bananaBool = true;
-                        Coin currentCoin = collidedObject.gameObject.GetComponent<Coin>();
-                        if (currentCoin != null)
-                        {
-                            currentCoin.pickUp();
-                        }
                     }
                     if (collidedObject.tag == "Pinya")
                     {

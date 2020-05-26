@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/IntroScene.unity
     guid: af32a8ab95a96401e8c9b892fee2cef2
   - enabled: 1
@@ -14,10 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Oculus/VR/Scenes/GearVrControllerTest.unity
     guid: d56af3aeb2176e7459f753c1c2e2dd97
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ConfigScene.unity
     guid: 69818f53819913b4eaa8d7ae9b39e14c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ScoreScene.unity
     guid: c6e7d123c5b4e3c44a36d3143a7c388a
   m_configObjects: {}
