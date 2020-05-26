@@ -204,8 +204,12 @@ public class GameGlobals : MonoBehaviour
 
     public void GameOver()
     {
-        Restart();//TODO:DELETE
-        StartCoroutine(DoGameOver(2f));
+        //Restart();//TODO:DELETE
+        //StartCoroutine(DoGameOver(2f));
+
+        gameOver = true;
+        hudScore.saveScores();
+
     }
 
     private IEnumerator DoGameOver(float waitTime)

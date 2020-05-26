@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Achievements : MonoBehaviour
 {
@@ -96,7 +97,7 @@ public class Achievements : MonoBehaviour
         // Saving Scores al player prefs
         PlayerPrefs.SetInt("totalCoins", totalCoins + currentCoins);
         PlayerPrefs.SetInt("totalScore", (totalScore + bonusCoins));
-
+        
 
         coundDownScore();
 
@@ -109,7 +110,7 @@ public class Achievements : MonoBehaviour
         ScoreFinal.SetActive(true);
         ScorePanel.SetActive(false);
 
-        Invoke("startCountDownScore", 3);
+        startCountDownScore();
        
     }
 
@@ -125,7 +126,8 @@ public class Achievements : MonoBehaviour
         scoresCounter = 0;
         scoreWaitCounter = 0;
 
-        scoring = StartCoroutine(countScore());
+        SceneManager.LoadScene("ScoreScene", LoadSceneMode.Additive);
+        //scoring = StartCoroutine(countScore());
     }
 
     private Coroutine scoring;
