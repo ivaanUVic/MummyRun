@@ -495,10 +495,13 @@ public class GameControllerScript : MonoBehaviour
             characterCollider.height = 1.4f;
             characterCollider.center = new Vector3(0, 0.74f, 0.04f);
 
-            
 
+            if (ovr != null)
+            {
+                ovr.headPoseRelativeOffsetTranslation = new Vector3(0f, 0.74f, 0f);
+            }
 
-            ovr.headPoseRelativeOffsetTranslation = new Vector3(0f, 0.74f, 0f);
+           
 
 
 
@@ -604,8 +607,11 @@ public class GameControllerScript : MonoBehaviour
 
         characterCollider.height = 3.5f;
         characterCollider.center = new Vector3(0, 1.75f, 0.04f);
+        if(ovr != null)
+        {
+            ovr.headPoseRelativeOffsetTranslation = new Vector3(0f, height, 0f);
+        }
 
-        ovr.headPoseRelativeOffsetTranslation = new Vector3(0f, height, 0f);
 
         if (this.characterController.enabled)
         {
