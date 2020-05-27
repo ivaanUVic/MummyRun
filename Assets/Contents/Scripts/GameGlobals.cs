@@ -56,7 +56,7 @@ public class GameGlobals : MonoBehaviour
         points = 0;
         plus = 0;
         instance = this;
-
+        
     }
 
     // Start is called before the first frame update

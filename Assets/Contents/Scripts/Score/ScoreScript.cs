@@ -9,58 +9,43 @@ public class ScoreScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var arrInt = new int[3];
-        var totalScore = PlayerPrefs.GetInt("totalCoins") + (PlayerPrefs.GetInt("totalScore")*20);
+        var totalScore = PlayerPrefs.GetInt("currentCoins") + (PlayerPrefs.GetInt("currentBonus") *20);
 
-        //Inicialitzem per primer cop el array
-        if (arrInt[0] < 1)
-        {
-            arrInt[0] = totalScore;
-            arrInt[1] = 0;
-            arrInt[2] = 0;
-        }
-        if (PlayerPrefs.GetInt("bestScore1") == 0)
-        {
-            PlayerPrefs.SetInt("bestScore1", totalScore);
-        }
-        else if(PlayerPrefs.GetInt("bestScore2") == 0)
-        {
-            PlayerPrefs.SetInt("bestScore2", 0);
-        }
-        else if (PlayerPrefs.GetInt("bestScore3") == 0)
-        {
-            PlayerPrefs.SetInt("bestScore3", 0);
-        }
-        /*La logica seria, inicialitzem els playerpref dels bestscore a 0
-         * Un cop inicialitzades comparem el score1 i si el score actual es millor al anterior movem totes les posicions una posició
-         * enrere i actualitzem el score1
-         * Si no superem la primera posició comprovem la segona, si superas la segona llavors tornem a fer el mateix sense tocar la primera posició
-         * 
-         */
+        
+
         if (totalScore > PlayerPrefs.GetInt("bestScore1"))
         {
-            arrInt[2] = PlayerPrefs.GetInt("bestScore2");
-            arrInt[1] = PlayerPrefs.GetInt("bestScore1");
+            PlayerPrefs.SetInt("bestScore3", PlayerPrefs.GetInt("bestScore2"));
+            PlayerPrefs.SetInt("bestScore2", PlayerPrefs.GetInt("bestScore1"));
             PlayerPrefs.SetInt("bestScore1", totalScore);
-            arrInt[0] = totalScore;
-            PlayerPrefs.SetInt("bestScore2", arrInt[1]);
-            PlayerPrefs.SetInt("bestScore3", arrInt[2]);
+            
         }
         if (totalScore < PlayerPrefs.GetInt("bestScore1") && totalScore > PlayerPrefs.GetInt("bestScore2"))
         {
-            
-            arrInt[2] = PlayerPrefs.GetInt("bestScore2");
+            PlayerPrefs.SetInt("bestScore3", PlayerPrefs.GetInt("bestScore2"));
             PlayerPrefs.SetInt("bestScore2", totalScore);
-            arrInt[1] = PlayerPrefs.GetInt("bestScore2");
-            PlayerPrefs.SetInt("bestScore3", arrInt[2]);
+            
 
         }
         if (totalScore < PlayerPrefs.GetInt("bestScore1") && totalScore < PlayerPrefs.GetInt("bestScore2") && totalScore > PlayerPrefs.GetInt("bestScore3"))
         {
             PlayerPrefs.SetInt("bestScore3", totalScore);
-            arrInt[2] = totalScore;
         }
-        BestScore.text = string.Format(" 1 - {0} \n 2 - {1} \n 3 - {2}", arrInt[0],arrInt[1],arrInt[2]);
+        if (PlayerPrefs.GetInt("bestScore2") < 1)
+        {
+            BestScore.text = string.Format(" 1 - {0} ", PlayerPrefs.GetInt("bestScore1"));
+        }
+        if (PlayerPrefs.GetInt("bestScore2") > 0 && PlayerPrefs.GetInt("bestScore3") < 1)
+        {
+            BestScore.text = string.Format(" 1 - {0} \n 2 - {1}", PlayerPrefs.GetInt("bestScore1"), PlayerPrefs.GetInt("bestScore2"));
+        }
+        else if (PlayerPrefs.GetInt("bestScore2") > 0 && PlayerPrefs.GetInt("bestScore3") > 0)
+        {
+            BestScore.text = string.Format(" 1 - {0} \n 2 - {1} \n 3 - {2}", PlayerPrefs.GetInt("bestScore1"), PlayerPrefs.GetInt("bestScore2"), PlayerPrefs.GetInt("bestScore3"));
+        }
+        //BestScore.text = string.Format(" 1 - {0} \n 2 - {1} \n 3 - {2}", PlayerPrefs.GetInt("bestScore1"), PlayerPrefs.GetInt("bestScore2"), PlayerPrefs.GetInt("bestScore3"));
+        PlayerPrefs.SetInt("currentCoins", 0);
+        PlayerPrefs.SetInt("currentBonus", 0);
     }
 
     // Update is called once per frame
