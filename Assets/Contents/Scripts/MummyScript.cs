@@ -21,4 +21,8 @@ public class MummyScript : MonoBehaviour
     {
         collider.isTrigger = true;
     }
+    private void OnTriggerExit(Collider other)
+    {
+        other.isTrigger = false;
+    }
 }
