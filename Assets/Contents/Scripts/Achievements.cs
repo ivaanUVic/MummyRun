@@ -95,6 +95,8 @@ public class Achievements : MonoBehaviour
         scoreCounterDuration = bonusCoins;
 
         // Saving Scores al player prefs
+        PlayerPrefs.SetInt("currentCoins", currentCoins);
+        PlayerPrefs.SetInt("currentBonus", bonusCoins);
         PlayerPrefs.SetInt("totalCoins", totalCoins + currentCoins);
         PlayerPrefs.SetInt("totalScore", (totalScore + bonusCoins));
         
